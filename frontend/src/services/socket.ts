@@ -1,30 +1,32 @@
 import { io, Socket } from 'socket.io-client';
-import { AggregatedScenarioResult, AgentThoughtLog } from '../types/index.js';
+import { AgentThoughtLog, AggregatedScenarioResult } from '../types/index.js';
 
-let socket: Socket | null = null;
+const SOCKET_URL = 'http://localhost:5000';
 
-export const initSocket = (
+export function initSocket(
   onThoughtLog: (log: AgentThoughtLog) => void,
-  onScenarioCompleted: (result: AggregatedScenarioResult) => void,
+  onScenarioResult: (result: AggregatedScenarioResult) => void,
   onConnectionChange: (connected: boolean) => void
-): Socket => {
-  if (socket) {
-    return socket;
-  }
-
-  socket = io(window.location.origin, {
+): Socket {
+  const socket = io(SOCKET_URL, {
     transports: ['websocket', 'polling'],
+    reconnection: true,
     reconnectionAttempts: 10,
-    reconnectionDelay: 1000
+    reconnectionDelay: 1000,
   });
 
   socket.on('connect', () => {
-    console.log('[Socket] Connected to server');
+    console.log('Socket connected:', socket.id);
     onConnectionChange(true);
   });
 
   socket.on('disconnect', () => {
-    console.log('[Socket] Disconnected');
+    console.log('Socket disconnected');
+    onConnectionChange(false);
+  });
+
+  socket.on('connect_error', (error) => {
+    console.error('Socket connection error:', error.message);
     onConnectionChange(false);
   });
 
@@ -32,15 +34,9 @@ export const initSocket = (
     onThoughtLog(log);
   });
 
-  socket.on('scenario:completed', (result: AggregatedScenarioResult) => {
-    onScenarioCompleted(result);
-  });
-
-  socket.on('scenario:latest', (result: AggregatedScenarioResult) => {
-    onScenarioCompleted(result);
+  socket.on('scenario:result', (result: AggregatedScenarioResult) => {
+    onScenarioResult(result);
   });
 
   return socket;
-};
-
-export const getSocket = (): Socket | null => socket;
+}
