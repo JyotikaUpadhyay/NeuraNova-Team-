@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  # 1. PostgreSQL with TimescaleDB
+  postgres:
+    image: timescale/timescaledb:latest-pg15
+    container_name: neuranova-postgres
+    environment:
+      POSTGRES_DB: neuranova_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    networks:
+      - neuranova-network
+
+  # 2. Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: neuranova-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - neuranova-network
+
+  # 3. Multi-Agent Backend & Orchestrator API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: ../Dockerfile.backend
+    container_name: neuranova-backend
+    environment:
+      PORT: 5000
+      NODE_ENV: production
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      DATABASE_URL: postgresql://postgres:postgrespassword@postgres:5432/neuranova_db
+      REDIS_URL: redis://redis:6379
+      CLIENT_URL: http://localhost:5173
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - neuranova-network
+
+  # 4. React Frontend Dashboard & ChatGPT-like Copilot
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ../Dockerfile.frontend
+    container_name: neuranova-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    networks:
+      - neuranova-network
+
+volumes:
+  pgdata:
+
+networks:
+  neuranova-network:
+    driver: bridge

@@ -1,0 +1,323 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.NETWORK_NODES = exports.ALTERNATIVE_SUPPLIERS = exports.PRESET_SCENARIOS = exports.INITIAL_CHOKEPOINTS = void 0;
+exports.INITIAL_CHOKEPOINTS = [
+    {
+        id: 'hormuz',
+        name: 'Strait of Hormuz',
+        lat: 26.5667,
+        lng: 56.25,
+        dailyFlowMbpd: 21.0,
+        globalSharePercent: 21.0,
+        status: 'OPEN',
+        transitFlowDropPercent: 0,
+        riskScore: 24,
+        incidentSummary: 'Normal maritime transit operations. Standard IRGC patrol presence.',
+        alternateRoute: 'East-West Petroline (Saudi) / Habshan-Fujairah pipeline (UAE)',
+        extraTransitDays: 0
+    },
+    {
+        id: 'babelmandeb',
+        name: 'Bab el-Mandeb (Red Sea)',
+        lat: 12.5833,
+        lng: 43.3333,
+        dailyFlowMbpd: 8.8,
+        globalSharePercent: 8.8,
+        status: 'RESTRICTED',
+        transitFlowDropPercent: 45,
+        riskScore: 78,
+        incidentSummary: 'Active anti-ship ballistic missile and drone hazard. 55% of tankers rerouting via Cape of Good Hope.',
+        alternateRoute: 'Cape of Good Hope (Southern Africa circumnavigation)',
+        extraTransitDays: 14
+    },
+    {
+        id: 'suez',
+        name: 'Suez Canal',
+        lat: 30.5852,
+        lng: 32.2654,
+        dailyFlowMbpd: 5.5,
+        globalSharePercent: 5.5,
+        status: 'RESTRICTED',
+        transitFlowDropPercent: 40,
+        riskScore: 65,
+        incidentSummary: 'Traffic constrained by upstream Red Sea maritime diversion protocols.',
+        alternateRoute: 'Cape of Good Hope Route',
+        extraTransitDays: 12
+    },
+    {
+        id: 'malacca',
+        name: 'Strait of Malacca',
+        lat: 4.2105,
+        lng: 100.9925,
+        dailyFlowMbpd: 16.0,
+        globalSharePercent: 16.0,
+        status: 'OPEN',
+        transitFlowDropPercent: 0,
+        riskScore: 18,
+        incidentSummary: 'High-density commercial vessel flow, normal coastal patrol operations.',
+        alternateRoute: 'Lombok / Makassar Straits',
+        extraTransitDays: 3
+    },
+    {
+        id: 'bosporus',
+        name: 'Turkish Straits (Bosporus / Dardanelles)',
+        lat: 41.1172,
+        lng: 29.0734,
+        dailyFlowMbpd: 3.2,
+        globalSharePercent: 3.2,
+        status: 'OPEN',
+        transitFlowDropPercent: 5,
+        riskScore: 42,
+        incidentSummary: 'Black Sea naval conflict war-risk insurance surcharges active.',
+        alternateRoute: 'BTC Pipeline / Med overland pipelines',
+        extraTransitDays: 4
+    },
+    {
+        id: 'panama',
+        name: 'Panama Canal',
+        lat: 9.1012,
+        lng: -79.6955,
+        dailyFlowMbpd: 1.2,
+        globalSharePercent: 1.2,
+        status: 'CONGESTED',
+        transitFlowDropPercent: 30,
+        riskScore: 52,
+        incidentSummary: 'Draft limitations and reservoir drought restricting neo-Panamax LNG/LPG booking slots.',
+        alternateRoute: 'Cape Horn / Suez eastbound',
+        extraTransitDays: 18
+    }
+];
+exports.PRESET_SCENARIOS = [
+    {
+        id: 'hormuz_closed',
+        name: 'Strait of Hormuz Total Blockade',
+        category: 'MILITARY',
+        description: 'Hostile naval interdiction, sea mine deployment, and drone strikes shutter all tanker navigation through the Strait of Hormuz.',
+        region: 'Persian Gulf / Middle East',
+        severity: 'CRITICAL',
+        disruptedChokepoints: ['hormuz'],
+        disruptedRefineries: ['Ras Tanura', 'Mina Al-Ahmadi', 'Ruwais'],
+        estimatedBpdDeficit: 17500000,
+        projectedDurationDays: 45
+    },
+    {
+        id: 'red_sea_crisis',
+        name: 'Red Sea Missile Escalation & Tanker Boycott',
+        category: 'GEOPOLITICAL',
+        description: 'Sustained anti-ship ballistic strikes force 90% of global maritime tanker fleets to bypass the Red Sea/Suez corridor via the Cape of Good Hope.',
+        region: 'Red Sea / Bab el-Mandeb / Horn of Africa',
+        severity: 'HIGH',
+        disruptedChokepoints: ['babelmandeb', 'suez'],
+        disruptedRefineries: ['Yanbu', 'Sidi Kerir'],
+        estimatedBpdDeficit: 4800000,
+        projectedDurationDays: 60
+    },
+    {
+        id: 'colonial_cyberattack',
+        name: 'Critical Pipeline Ransomware Outage',
+        category: 'CYBER',
+        description: 'Coordinated zero-day cyber infiltration on SCADA control systems halts major refined product pipeline throughput across the East Coast corridor.',
+        region: 'North America / Atlantic Basin',
+        severity: 'HIGH',
+        disruptedChokepoints: [],
+        disruptedRefineries: ['Port Arthur', 'Bayway'],
+        estimatedBpdDeficit: 2500000,
+        projectedDurationDays: 14
+    },
+    {
+        id: 'north_sea_outage',
+        name: 'North Sea Severe Storm & Offshore Terminal Failure',
+        category: 'WEATHER',
+        description: 'Category 4 Arctic cyclonic storm system causes severe structural damage to Forties pipeline riser and offshore Ekofisk loading buoys.',
+        region: 'North Sea / Northern Europe',
+        severity: 'MEDIUM',
+        disruptedChokepoints: [],
+        disruptedRefineries: ['Mongstad', 'Rotterdam Pernis'],
+        estimatedBpdDeficit: 1800000,
+        projectedDurationDays: 21
+    },
+    {
+        id: 'panama_canal_drought',
+        name: 'Panama Canal Severe Drought Transit Halve',
+        category: 'WEATHER',
+        description: 'Historic low precipitation at Gatun Lake triggers 50% cut in daily neo-Panamax energy vessel transits, stranding US Gulf LNG exports to Asia.',
+        region: 'Central America / Trans-Pacific',
+        severity: 'MEDIUM',
+        disruptedChokepoints: ['panama'],
+        disruptedRefineries: [],
+        estimatedBpdDeficit: 1200000,
+        projectedDurationDays: 90
+    }
+];
+exports.ALTERNATIVE_SUPPLIERS = [
+    {
+        id: 'us_gulf_wti',
+        supplier: 'US Gulf Coast Export Hubs',
+        originCountry: 'United States',
+        originPort: 'Corpus Christi / Houston',
+        lat: 27.8006,
+        lng: -97.3964,
+        crudeGrade: 'WTI Midland (Light Sweet)',
+        availableCapacityBpd: 2400000,
+        leadTimeDays: 14,
+        deltaLeadTimeDays: +3,
+        freightCostDeltaPerBbl: 2.10,
+        totalLandedCostPerBbl: 84.50,
+        feasibilityScore: 94,
+        contractFlexibility: 'SPOT'
+    },
+    {
+        id: 'west_africa_bonny',
+        supplier: 'West African Producers (Nigeria/Angola)',
+        originCountry: 'Nigeria',
+        originPort: 'Bonny Offshore Terminal',
+        lat: 4.4500,
+        lng: 7.1667,
+        crudeGrade: 'Bonny Light / Forcados',
+        availableCapacityBpd: 1100000,
+        leadTimeDays: 18,
+        deltaLeadTimeDays: +5,
+        freightCostDeltaPerBbl: 1.85,
+        totalLandedCostPerBbl: 86.20,
+        feasibilityScore: 88,
+        contractFlexibility: 'SHORT_TERM'
+    },
+    {
+        id: 'brazil_pre_salt',
+        supplier: 'Petrobras Offshore Santos Basin',
+        originCountry: 'Brazil',
+        originPort: 'Angra dos Reis (Tupí Hub)',
+        lat: -23.0067,
+        lng: -44.3181,
+        crudeGrade: 'Búzios / Tupi (Medium Sweet)',
+        availableCapacityBpd: 950000,
+        leadTimeDays: 22,
+        deltaLeadTimeDays: +8,
+        freightCostDeltaPerBbl: 2.40,
+        totalLandedCostPerBbl: 85.10,
+        feasibilityScore: 86,
+        contractFlexibility: 'TERM'
+    },
+    {
+        id: 'north_sea_forties',
+        supplier: 'North Sea Offshore Cluster',
+        originCountry: 'United Kingdom / Norway',
+        originPort: 'Hound Point / Mongstad',
+        lat: 56.0000,
+        lng: -3.3500,
+        crudeGrade: 'Forties / Ekofisk',
+        availableCapacityBpd: 650000,
+        leadTimeDays: 6,
+        deltaLeadTimeDays: -2,
+        freightCostDeltaPerBbl: 0.90,
+        totalLandedCostPerBbl: 88.40,
+        feasibilityScore: 82,
+        contractFlexibility: 'SPOT'
+    },
+    {
+        id: 'saudi_petroline_bypass',
+        supplier: 'Saudi East-West Petroline Bypass (Yanbu Hub)',
+        originCountry: 'Saudi Arabia',
+        originPort: 'Yanbu Red Sea Terminal',
+        lat: 24.0900,
+        lng: 38.0630,
+        crudeGrade: 'Arab Light / Arab Heavy',
+        availableCapacityBpd: 3500000,
+        leadTimeDays: 12,
+        deltaLeadTimeDays: +4,
+        freightCostDeltaPerBbl: 1.20,
+        totalLandedCostPerBbl: 83.90,
+        feasibilityScore: 91,
+        contractFlexibility: 'TERM'
+    }
+];
+exports.NETWORK_NODES = [
+    {
+        id: 'ghawar_field',
+        name: 'Ghawar Oil Field',
+        type: 'FIELD',
+        lat: 25.4322,
+        lng: 49.6186,
+        capacityBpd: 3800000,
+        currentThroughputBpd: 3650000,
+        utilizationPercent: 96,
+        status: 'HEALTHY'
+    },
+    {
+        id: 'permian_basin',
+        name: 'Permian Basin Production Basin',
+        type: 'FIELD',
+        lat: 31.8637,
+        lng: -102.3676,
+        capacityBpd: 6200000,
+        currentThroughputBpd: 5900000,
+        utilizationPercent: 95,
+        status: 'HEALTHY'
+    },
+    {
+        id: 'ras_tanura_terminal',
+        name: 'Ras Tanura Export Terminal',
+        type: 'TERMINAL',
+        lat: 26.6433,
+        lng: 50.1583,
+        capacityBpd: 6500000,
+        currentThroughputBpd: 5800000,
+        utilizationPercent: 89,
+        status: 'HEALTHY'
+    },
+    {
+        id: 'houston_ship_channel',
+        name: 'Houston Ship Channel Hub',
+        type: 'TERMINAL',
+        lat: 29.7355,
+        lng: -95.1265,
+        capacityBpd: 4800000,
+        currentThroughputBpd: 4200000,
+        utilizationPercent: 87,
+        status: 'HEALTHY'
+    },
+    {
+        id: 'rotterdam_refinery_hub',
+        name: 'Port of Rotterdam Energy Hub',
+        type: 'REFINERY',
+        lat: 51.9244,
+        lng: 4.4777,
+        capacityBpd: 1250000,
+        currentThroughputBpd: 1180000,
+        utilizationPercent: 94,
+        status: 'HEALTHY'
+    },
+    {
+        id: 'jamnagar_refinery',
+        name: 'Reliance Jamnagar Mega Refinery',
+        type: 'REFINERY',
+        lat: 22.4707,
+        lng: 70.0577,
+        capacityBpd: 1400000,
+        currentThroughputBpd: 1350000,
+        utilizationPercent: 96,
+        status: 'HEALTHY'
+    },
+    {
+        id: 'jurong_singapore',
+        name: 'Jurong Island Refining Cluster',
+        type: 'REFINERY',
+        lat: 1.2667,
+        lng: 103.7167,
+        capacityBpd: 1500000,
+        currentThroughputBpd: 1410000,
+        utilizationPercent: 94,
+        status: 'HEALTHY'
+    },
+    {
+        id: 'tokyo_bay_hub',
+        name: 'Tokyo Bay Consumer Gateway',
+        type: 'CONSUMER_HUB',
+        lat: 35.5333,
+        lng: 139.7833,
+        capacityBpd: 3200000,
+        currentThroughputBpd: 3100000,
+        utilizationPercent: 97,
+        status: 'HEALTHY'
+    }
+];
