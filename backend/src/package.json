@@ -4,9 +4,9 @@
   "description": "Multi-Agent Energy Supply Chain Resilience API & Orchestrator",
   "main": "src/server.ts",
   "scripts": {
-    "dev": "tsx watch src/server.ts",
+    "dev": "tsx watch server.ts",
     "build": "tsc",
-    "start": "tsx src/server.ts"
+    "start": "tsx server.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",
