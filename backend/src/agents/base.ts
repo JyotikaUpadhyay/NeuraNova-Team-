@@ -13,7 +13,7 @@ class BaseAgent {
     constructor(agentId, agentName) {
         this.agentId = agentId;
         this.agentName = agentName;
-        const apiKey = process.env.ANTHROPIC_API_KEY;
+        const apiKey = '';
         if (apiKey && apiKey.trim().length > 10 && !apiKey.includes('your_api_key')) {
             try {
                 this.anthropicClient = new sdk_1.default({ apiKey });
