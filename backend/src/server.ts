@@ -17,9 +17,12 @@ const orchestrator = new AgentOrchestrator();
    MIDDLEWARE
 ========================= */
 
+const CLIENT_URL =
+  process.env.CLIENT_URL || 'http://localhost:5173';
+
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: CLIENT_URL,
     methods: ['GET', 'POST'],
     credentials: true,
   })
@@ -63,7 +66,7 @@ const httpServer = createServer(app);
 
 export const io = new Server(httpServer, {
   cors: {
-    origin: 'http://localhost:5173',
+    origin: CLIENT_URL,
     methods: ['GET', 'POST'],
     credentials: true,
   },
@@ -83,13 +86,13 @@ io.on('connection', (socket) => {
    START SERVER
 ========================= */
 
-const PORT = 5000;
+const PORT = Number(process.env.PORT) || 5000;
 
 httpServer.listen(PORT, () => {
   console.log('==============================================');
   console.log('⚡ NeuraNova Energy Resilience AI Backend ⚡');
-  console.log(`Server running on: http://localhost:${PORT}`);
-  console.log(`Health Check: http://localhost:${PORT}/api/health`);
-  console.log(`Socket.io active on ws://localhost:${PORT}`);
+  console.log(`Server running on port: ${PORT}`);
+  console.log(`Health Check: /api/health`);
+  console.log(`Allowed frontend origin: ${CLIENT_URL}`);
   console.log('==============================================');
 });

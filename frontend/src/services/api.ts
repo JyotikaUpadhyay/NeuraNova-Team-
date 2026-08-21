@@ -1,7 +1,11 @@
 import axios from 'axios';
-import { AggregatedScenarioResult, ChatMessage, Scenario } from '../types/index.js';
+import {
+  AggregatedScenarioResult,
+  ChatMessage,
+  Scenario
+} from '../types/index.js';
 
-const API_BASE = '/api';
+const API_BASE = import.meta.env.VITE_API_URL || '/api';
 
 export const api = {
   // Scenarios
@@ -15,13 +19,22 @@ export const api = {
     return res.data.data;
   },
 
-  runScenario: async (scenarioId: string): Promise<AggregatedScenarioResult> => {
-    const res = await axios.post(`${API_BASE}/scenarios/run/${scenarioId}`);
+  runScenario: async (
+    scenarioId: string
+  ): Promise<AggregatedScenarioResult> => {
+    const res = await axios.post(
+      `${API_BASE}/scenarios/run/${scenarioId}`
+    );
     return res.data.data;
   },
 
-  runCustomScenario: async (scenarioData: Partial<Scenario>): Promise<AggregatedScenarioResult> => {
-    const res = await axios.post(`${API_BASE}/scenarios/run-custom`, scenarioData);
+  runCustomScenario: async (
+    scenarioData: Partial<Scenario>
+  ): Promise<AggregatedScenarioResult> => {
+    const res = await axios.post(
+      `${API_BASE}/scenarios/run-custom`,
+      scenarioData
+    );
     return res.data.data;
   },
 
@@ -31,8 +44,16 @@ export const api = {
     return res.data.messages;
   },
 
-  sendMessage: async (message: string): Promise<{ message: ChatMessage; actionTaken?: any }> => {
-    const res = await axios.post(`${API_BASE}/chat`, { message });
+  sendMessage: async (
+    message: string
+  ): Promise<{
+    message: ChatMessage;
+    actionTaken?: any;
+  }> => {
+    const res = await axios.post(`${API_BASE}/chat`, {
+      message
+    });
+
     return res.data;
   },
 
@@ -42,27 +63,37 @@ export const api = {
 
   // Metrics
   getChokepoints: async () => {
-    const res = await axios.get(`${API_BASE}/metrics/chokepoints`);
+    const res = await axios.get(
+      `${API_BASE}/metrics/chokepoints`
+    );
     return res.data.data;
   },
 
   getSuppliers: async () => {
-    const res = await axios.get(`${API_BASE}/metrics/suppliers`);
+    const res = await axios.get(
+      `${API_BASE}/metrics/suppliers`
+    );
     return res.data.data;
   },
 
   getNetwork: async () => {
-    const res = await axios.get(`${API_BASE}/metrics/network`);
+    const res = await axios.get(
+      `${API_BASE}/metrics/network`
+    );
     return res.data.data;
   },
 
   getSpr: async () => {
-    const res = await axios.get(`${API_BASE}/metrics/spr`);
+    const res = await axios.get(
+      `${API_BASE}/metrics/spr`
+    );
     return res.data.data;
   },
 
   getAgentMetadata: async () => {
-    const res = await axios.get(`${API_BASE}/agents/metadata`);
+    const res = await axios.get(
+      `${API_BASE}/agents/metadata`
+    );
     return res.data.agents;
   }
 };

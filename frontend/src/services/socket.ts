@@ -1,7 +1,13 @@
 import { io, Socket } from 'socket.io-client';
-import { AgentThoughtLog, AggregatedScenarioResult } from '../types/index.js';
+import {
+  AgentThoughtLog,
+  AggregatedScenarioResult
+} from '../types/index.js';
 
-const SOCKET_URL = 'http://localhost:5000';
+// Local development: http://localhost:5000
+// Deployment: uses VITE_SOCKET_URL environment variable
+const SOCKET_URL =
+  import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000';
 
 export function initSocket(
   onThoughtLog: (log: AgentThoughtLog) => void,
@@ -34,9 +40,12 @@ export function initSocket(
     onThoughtLog(log);
   });
 
-  socket.on('scenario:result', (result: AggregatedScenarioResult) => {
-    onScenarioResult(result);
-  });
+  socket.on(
+    'scenario:result',
+    (result: AggregatedScenarioResult) => {
+      onScenarioResult(result);
+    }
+  );
 
   return socket;
 }
