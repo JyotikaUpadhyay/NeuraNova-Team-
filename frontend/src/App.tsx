@@ -201,7 +201,7 @@ export function App() {
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
           <div>NeuraNova Energy Resilience AI • Multi-Agent Autonomous Supply Chain Defense</div>
           <div className="flex items-center gap-4">
-            <span>Model: {result?.modelUsed || 'Claude 3.5 Sonnet / Multi-Agent Simulation'}</span>
+            <span>Model: {result?.modelUsed || 'NeuraNova Multi-Agent Engine / Multi-Agent Simulation'}</span>
             <span>•</span>
             <span className="text-emerald-400">System Operational</span>
           </div>
