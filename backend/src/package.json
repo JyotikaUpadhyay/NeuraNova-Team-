@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "tsx watch server.ts",
     "build": "tsc",
-    "start": "tsx server.ts"
+    "start": "npx tsx server.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",
