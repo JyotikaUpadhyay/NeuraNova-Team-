@@ -7,6 +7,12 @@ NeuraNova demonstrates how specialized AI agents can work together to analyze ma
 
 ---
 
+## 🚀 Live Demo
+
+🌐 **Deployed Application:**  https://neura-nova-team.vercel.app
+
+ Experience the complete NeuraNova multi-agent energy resilience platform through the live deployed prototype.
+
 ## 🌟 Key Capabilities
 
 ### 1. 🤖 5 Parallel Autonomous AI Agents
