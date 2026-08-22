@@ -13,6 +13,10 @@ NeuraNova demonstrates how specialized AI agents can work together to analyze ma
 
  Experience the complete NeuraNova multi-agent energy resilience platform through the live deployed prototype.
 
+🌐 ** Demo Youtube Video Link** 
+
+Watch the complete NeuraNova platform demonstration here: https://youtu.be/92k65J9f1SM?si=3bfl52I-ZpB5fkvo
+
 ## 🌟 Key Capabilities
 
 ### 1. 🤖 5 Parallel Autonomous AI Agents
